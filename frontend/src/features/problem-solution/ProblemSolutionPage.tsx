@@ -2,28 +2,23 @@ import React, { useState } from 'react';
 import { Card } from '../../components/common/Card';
 import { Badge } from '../../components/common/Badge';
 import { Button } from '../../components/common/Button';
-import { PageHeading } from '../../components/common/PageHeading';
 import {
-  Lightbulb,
   AlertTriangle,
   CheckCircle2,
   ShieldCheck,
   Cpu,
   Zap,
-  ArrowRight,
   TrendingDown,
   DollarSign,
   Clock,
   Sparkles,
   Bot,
   Layers,
-  Scale,
   RefreshCw,
   Terminal,
   FileText,
   UserCheck,
   Lock,
-  ChevronRight,
   BookOpen,
 } from 'lucide-react';
 import { ViewType } from '../../types';

@@ -24,6 +24,7 @@ export const Header: React.FC<HeaderProps> = ({
     automations: 'My automations',
     library: 'Classroom library',
     activity: 'Activity',
+    'problem-solution': 'Problem & Solution',
     resources: 'Help & resources',
     auth: 'Teacher Account & Profile',
   };
