@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher AI | Small Language Model Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Navigation Header -->
+    <header class="top-nav">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <h1>TEACHER <span class="gradient-text">AI</span></h1>
+          <p class="brand-subtitle">Small Language Model (SLM) Distiller & Studio</p>
+        </div>
+      </div>
+
+      <div class="nav-status-group">
+        <div class="status-pill" id="teacher-status-pill">
+          <span class="pulse-dot"></span>
+          <span id="teacher-status-text">Teacher: Ready</span>
+        </div>
+        <div class="status-pill neutral" id="device-status-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+            <line x1="6" y1="6" x2="6.01" y2="6"/>
+            <line x1="6" y1="18" x2="6.01" y2="18"/>
+          </svg>
+          <span id="device-text">PyTorch CPU/CUDA</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btn-open-settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          API Key
+        </button>
+      </div>
+    </header>
+
+    <!-- Multi-Step Pipeline Navigation Wizard -->
+    <nav class="pipeline-stepper" id="pipeline-nav">
+      <button class="step-tab active" data-tab="tab-task" id="tab-btn-task">
+        <span class="step-num">1</span>
+        <span class="step-label">Task Purpose</span>
+      </button>
+      <div class="stepper-line"></div>
+      <button class="step-tab" data-tab="tab-samples" id="tab-btn-samples">
+        <span class="step-num">2</span>
+        <span class="step-label">Sample Space</span>
+      </button>
+      <div class="stepper-line"></div>
+      <button class="step-tab" data-tab="tab-params" id="tab-btn-params">
+        <span class="step-num">3</span>
+        <span class="step-label">Architecture</span>
+      </button>
+      <div class="stepper-line"></div>
+      <button class="step-tab" data-tab="tab-train" id="tab-btn-train">
+        <span class="step-num">4</span>
+        <span class="step-label">Distillation Lab</span>
+      </button>
+      <div class="stepper-line"></div>
+      <button class="step-tab" data-tab="tab-arena" id="tab-btn-arena">
+        <span class="step-num">5</span>
+        <span class="step-label">Battle Arena</span>
+      </button>
+      <div class="stepper-line"></div>
+      <button class="step-tab" data-tab="tab-export" id="tab-btn-export">
+        <span class="step-num">6</span>
+        <span class="step-label">Export & Ship</span>
+      </button>
+    </nav>
+
+    <!-- Main Dynamic Content Views -->
+    <main class="main-content">
+      <!-- TAB 1: Task Purpose & Requirements -->
+      <section class="tab-pane active" id="tab-task">
+        <div class="hero-banner">
+          <h2>Synthesize a Specialized <span class="gradient-text">Small Language Model</span></h2>
+          <p>Describe your custom automation intent in plain English. Teacher AI will blueprint the optimal Micro-SLM parameters, generate the synthetic sample space, and distill a tiny model that runs locally at ultra-low latency.</p>
+        </div>
+
+        <div class="card card-glow">
+          <div class="card-header">
+            <h3>1. What should your Small Language Model automate?</h3>
+          </div>
+
+          <div class="presets-section">
+            <span class="presets-title">Popular Presets:</span>
+            <div class="preset-chips" id="preset-container">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <div class="form-group">
+            <textarea id="task-prompt-input" rows="4" placeholder="e.g. Read incoming customer emails, classify their urgency (High/Medium/Low) and department, and draft a polite 2-sentence acknowledgement reply..."></textarea>
+          </div>
+
+          <div class="grid-2col">
+            <div class="form-group">
+              <label for="arch-select">Target Base Architecture</label>
+              <select id="arch-select">
+                <option value="nano_transformer" selected>⚡ Nano-Transformer (Pure PyTorch, 100K-1M params, instant CPU/GPU training)</option>
+                <option value="hf_lora">📦 Hugging Face LoRA (SmollLM-135M / TinyLlama-1.1B adapter template)</option>
+              </select>
+              <span class="help-text">Nano-Transformer trains directly in your browser session in ~15 seconds without heavy downloads.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="sample-size-range">
+                Synthetic Sample Space Size: <strong id="sample-size-val">35</strong> examples
+              </label>
+              <input type="range" id="sample-size-range" min="15" max="60" value="35" step="5">
+              <span class="help-text">Number of high-diversity input/output training pairs synthesized by Teacher AI.</span>
+            </div>
+          </div>
+
+          <div class="action-footer">
+            <button class="btn btn-primary btn-lg" id="btn-synthesize-blueprint">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+              </svg>
+              Synthesize Blueprint with Teacher AI
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: Sample Space Explorer -->
+      <section class="tab-pane" id="tab-samples">
+        <div class="card">
+          <div class="card-header flex-between">
+            <div>
+              <h3 id="blueprint-title">Model Blueprint & Sample Space</h3>
+              <p class="text-muted" id="blueprint-summary">Synthesized dataset of diverse domain examples.</p>
+            </div>
+            <div class="badge-group">
+              <span class="badge badge-purple" id="badge-domain">Domain: General</span>
+              <span class="badge badge-cyan" id="badge-sample-count">0 Samples</span>
+            </div>
+          </div>
+
+          <div class="blueprint-summary-box" id="blueprint-details">
+            <div class="summary-item">
+              <span class="item-label">System Instruction:</span>
+              <span class="item-value" id="disp-sys-inst">-</span>
+            </div>
+            <div class="summary-item">
+              <span class="item-label">Expected Output Format:</span>
+              <span class="item-value font-mono" id="disp-out-format">-</span>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="data-table" id="sample-space-table">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">#</th>
+                  <th style="width: 120px;">Category</th>
+                  <th>Input Query</th>
+                  <th>Target SLM Output</th>
+                  <th style="width: 90px;">Type</th>
+                </tr>
+              </thead>
+              <tbody id="sample-table-body">
+                <tr>
+                  <td colspan="5" class="empty-state">No sample space generated yet. Go to Step 1 and synthesize a blueprint.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="action-footer flex-between">
+            <button class="btn btn-secondary" id="btn-regenerate-samples">
+              ↻ Regenerate Sample Space
+            </button>
+            <button class="btn btn-primary" id="btn-proceed-to-params">
+              Review Architecture & Parameters ➔
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: Architecture & Parameters -->
+      <section class="tab-pane" id="tab-params">
+        <div class="card">
+          <div class="card-header">
+            <h3>Target SLM Neural Network Architecture</h3>
+            <p class="text-muted">Fine-tune the neural hyper-parameters or keep Teacher AI's recommended configuration.</p>
+          </div>
+
+          <div class="grid-4col">
+            <div class="metric-card">
+              <span class="metric-label">Embedding Dim (d_model)</span>
+              <input type="number" id="hp-dmodel" class="input-metric" value="128" step="32" min="64" max="512">
+              <span class="metric-hint">Hidden vector dimension</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Attention Heads</span>
+              <input type="number" id="hp-nheads" class="input-metric" value="4" min="2" max="16" step="2">
+              <span class="metric-hint">Multi-head causal attention</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Transformer Layers</span>
+              <input type="number" id="hp-nlayers" class="input-metric" value="3" min="1" max="12">
+              <span class="metric-hint">Encoder/Decoder block depth</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">FeedForward Dim</span>
+              <input type="number" id="hp-dimffn" class="input-metric" value="512" step="64">
+              <span class="metric-hint">GELU inner projection</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Max Sequence Length</span>
+              <input type="number" id="hp-seqlen" class="input-metric" value="128" step="32">
+              <span class="metric-hint">Context token window</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Training Epochs</span>
+              <input type="number" id="hp-epochs" class="input-metric" value="25" min="5" max="60">
+              <span class="metric-hint">Distillation iterations</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Learning Rate</span>
+              <input type="number" id="hp-lr" class="input-metric" value="0.001" step="0.0002">
+              <span class="metric-hint">AdamW optimizer rate</span>
+            </div>
+            <div class="metric-card highlight">
+              <span class="metric-label">Est. Parameter Count</span>
+              <span class="metric-val" id="disp-est-params">~145,000</span>
+              <span class="metric-hint">Memory: ~1.1 MB (Fast Edge CPU)</span>
+            </div>
+          </div>
+
+          <div class="action-footer flex-between">
+            <button class="btn btn-secondary" id="btn-back-to-samples">← Back to Samples</button>
+            <button class="btn btn-primary btn-lg" id="btn-go-to-training">
+              Proceed to Distillation Lab ➔
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: Distillation Lab (Training) -->
+      <section class="tab-pane" id="tab-train">
+        <div class="card card-glow">
+          <div class="card-header flex-between">
+            <div>
+              <h3>Micro-SLM Distillation Lab</h3>
+              <p class="text-muted">Train and compress the model weights directly on the synthetic sample space.</p>
+            </div>
+            <button class="btn btn-primary btn-lg" id="btn-start-training">
+              🚀 Start Distillation
+            </button>
+          </div>
+
+          <!-- Live Progress Tracker -->
+          <div class="training-status-box" id="train-status-box" style="display: none;">
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="train-progress-fill" style="width: 0%;"></div>
+            </div>
+            <div class="flex-between font-mono text-sm mt-2">
+              <span id="train-epoch-status">Epoch 0 / 0</span>
+              <span id="train-percent-status">0%</span>
+            </div>
+          </div>
+
+          <!-- Live Loss Chart & Stats -->
+          <div class="grid-2col mt-4">
+            <div class="chart-container">
+              <div class="chart-title">Loss Curve (Training vs Validation)</div>
+              <canvas id="loss-chart" width="480" height="240"></canvas>
+            </div>
+
+            <div class="live-metrics-panel">
+              <div class="metric-tile">
+                <span class="tile-title">Final Train Loss</span>
+                <span class="tile-value" id="metric-train-loss">-</span>
+              </div>
+              <div class="metric-tile">
+                <span class="tile-title">Validation Loss</span>
+                <span class="tile-value" id="metric-val-loss">-</span>
+              </div>
+              <div class="metric-tile">
+                <span class="tile-title">Perplexity</span>
+                <span class="tile-value" id="metric-perplexity">-</span>
+              </div>
+              <div class="metric-tile">
+                <span class="tile-title">Distillation Time</span>
+                <span class="tile-value" id="metric-time">-</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-footer flex-between mt-4">
+            <span class="status-indicator-text" id="train-footer-msg">Model is ready for training.</span>
+            <button class="btn btn-success" id="btn-proceed-to-arena" disabled>
+              Open Battle Arena & Test ➔
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: Battle Arena & Playground -->
+      <section class="tab-pane" id="tab-arena">
+        <div class="card">
+          <div class="card-header flex-between">
+            <div>
+              <h3>Teacher AI vs Student SLM Battle Arena</h3>
+              <p class="text-muted">Compare the Giant Cloud Teacher (Gemini) vs your distilled compact Micro-SLM side-by-side.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-run-benchmark">
+              ⚡ Run Multi-Query Benchmark
+            </button>
+          </div>
+
+          <div class="prompt-box-group">
+            <input type="text" id="arena-query-input" placeholder="Enter a query to test both models..." value="Can I get a refund for my duplicate payment?">
+            <button class="btn btn-primary" id="btn-arena-submit">Evaluate</button>
+          </div>
+
+          <div class="arena-grid mt-4">
+            <!-- Left: Teacher Model Card -->
+            <div class="arena-card teacher-card">
+              <div class="arena-header">
+                <div>
+                  <h4>🎓 Teacher Model (Gemini Giant)</h4>
+                  <span class="badge badge-purple">Cloud Foundation AI</span>
+                </div>
+                <div class="speed-badge" id="teacher-latency-badge">~850 ms</div>
+              </div>
+              <div class="arena-body" id="teacher-output-box">
+                Awaiting evaluation query...
+              </div>
+              <div class="arena-footer">
+                <span>Cost: API Token Billing</span>
+                <span>Footprint: Cloud Server Cluster</span>
+              </div>
+            </div>
+
+            <!-- Right: Student SLM Card -->
+            <div class="arena-card student-card">
+              <div class="arena-header">
+                <div>
+                  <h4 id="arena-student-title">⚡ Distilled Student SLM</h4>
+                  <span class="badge badge-emerald" id="arena-student-params">Local Micro-Transformer</span>
+                </div>
+                <div class="speed-badge highlight" id="student-latency-badge">~6 ms</div>
+              </div>
+              <div class="arena-body" id="student-output-box">
+                Awaiting evaluation query...
+              </div>
+              <div class="arena-footer">
+                <span class="text-emerald">Cost: $0.00 (100% On-Device)</span>
+                <span id="arena-speedup-text">140x Faster</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Benchmark Results Container -->
+          <div class="benchmark-results-box" id="benchmark-results-box" style="display: none;">
+            <h4>Benchmark Speedup Analysis</h4>
+            <div id="benchmark-items-container"></div>
+          </div>
+
+          <div class="action-footer flex-between mt-4">
+            <button class="btn btn-secondary" id="btn-back-to-train">← Back to Training</button>
+            <button class="btn btn-primary" id="btn-go-to-export">
+              Package & Export Standalone Model ➔
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: Export & Standalone Package -->
+      <section class="tab-pane" id="tab-export">
+        <div class="card card-glow">
+          <div class="card-header">
+            <h3>Standalone Model Package Ready to Ship</h3>
+            <p class="text-muted">The distilled Small Language Model has been verified and exported into a standalone folder.</p>
+          </div>
+
+          <div class="export-path-banner">
+            <span class="label">Export Location:</span>
+            <code id="export-path-display">exported_slm/custom_slm</code>
+          </div>
+
+          <div class="grid-2col mt-4">
+            <!-- Files Tree -->
+            <div class="file-tree-card">
+              <h4>Package Contents</h4>
+              <ul class="file-list" id="export-file-list">
+                <li><span class="file-icon">📄</span> <strong>model.pt</strong> — PyTorch trained weight tensors</li>
+                <li><span class="file-icon">🔤</span> <strong>vocab.json</strong> — Custom subword tokenizer vocabulary</li>
+                <li><span class="file-icon">⚙️</span> <strong>config.json</strong> — Architecture and hyperparameters metadata</li>
+                <li><span class="file-icon">🚀</span> <strong>serve.py</strong> — Self-contained CLI & REST FastAPI inference server</li>
+                <li><span class="file-icon">📦</span> <strong>training_data.jsonl</strong> — Teacher AI synthetic sample space</li>
+                <li><span class="file-icon">📈</span> <strong>train_hf.py</strong> — Hugging Face fine-tuning script for scaling up</li>
+                <li><span class="file-icon">📋</span> <strong>README.md</strong> — Setup, Docker, and deployment guide</li>
+              </ul>
+            </div>
+
+            <!-- Code Snippet -->
+            <div class="snippet-card">
+              <div class="snippet-header">
+                <span>How to Run Anywhere</span>
+                <button class="btn-copy" id="btn-copy-code">Copy</button>
+              </div>
+              <pre><code id="export-snippet-code"># 1. Enter the exported folder
+cd exported_slm/your_model_name
+
+# 2. Run CLI prediction (runs in milliseconds!)
+python serve.py --prompt "Your test input"
+
+# 3. Or launch edge REST API server on port 8000
+python serve.py --server</code></pre>
+            </div>
+          </div>
+
+          <div class="action-footer flex-between mt-4">
+            <button class="btn btn-secondary" id="btn-back-to-arena">← Back to Arena</button>
+            <button class="btn btn-success btn-lg" id="btn-new-model">
+              + Build Another Language Model
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- API Key Settings Modal -->
+    <div class="modal-overlay" id="settings-modal" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>Gemini API Configuration</h3>
+          <button class="btn-close" id="btn-close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="text-sm text-muted">
+            The Teacher AI uses Gemini to blueprint architectures and synthesize diverse sample spaces.
+          </p>
+          <div class="form-group mt-3">
+            <label for="modal-api-key">Gemini API Key</label>
+            <input type="password" id="modal-api-key" placeholder="AIzaSy...">
+          </div>
+          <div class="status-msg" id="modal-status-msg"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="btn-cancel-modal">Cancel</button>
+          <button class="btn btn-primary" id="btn-save-key">Save Key</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

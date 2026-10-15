@@ -1,0 +1,25 @@
+{
+  "task_name": "support_triage_slm",
+  "display_title": "Customer Support Triage & Auto-Reply SLM",
+  "purpose_summary": "Analyzes support inquiries, determines urgency and intent, outputs a 1-sentence situation summary, and drafts a polite resolution auto-reply.",
+  "system_instruction": "You are a compact Customer Support Triage Assistant. Analyze the customer ticket and output Priority, Intent, Summary, and a professional Suggested Reply.",
+  "hyperparameters": {
+    "architecture_type": "nano_transformer",
+    "vocab_size": 512,
+    "d_model": 128,
+    "n_heads": 4,
+    "n_layers": 3,
+    "dim_feedforward": 512,
+    "max_seq_len": 128,
+    "learning_rate": 0.001,
+    "epochs": 25,
+    "batch_size": 8,
+    "dropout": 0.1
+  },
+  "total_parameters": 637568,
+  "final_train_loss": 0.261,
+  "final_val_loss": 0.2277,
+  "final_perplexity": 1.26,
+  "training_time_seconds": 13.89,
+  "vocab_size": 204
+}
